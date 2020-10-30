@@ -27,7 +27,7 @@
     "cookiejar": "^2.1.2",
     "debug": "^4.1.1",
     "fast-safe-stringify": "^2.0.7",
-    "form-data": "^3.0.0",
+    "form-data-mixed-dropbox": "git://github.com/D2L-Labs/form-data-mixed-dropbox.git",
     "formidable": "^1.2.2",
     "methods": "^1.1.2",
     "mime": "^2.4.6",

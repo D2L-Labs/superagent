@@ -13,7 +13,7 @@ const util = require('util');
 const qs = require('qs');
 const mime = require('mime');
 let methods = require('methods');
-const FormData = require('form-data');
+const FormData = require('form-data-mixed-dropbox');
 const formidable = require('formidable');
 const debug = require('debug')('superagent');
 const CookieJar = require('cookiejar');
@@ -241,6 +241,30 @@ Request.prototype.http2 = function (bool) {
  * @api public
  */
 
+Request.prototype.attachWithDescription = function(field, file, options, textVal){
+  if (file) {
+    if (this._data) {
+      throw Error("superagent can't mix .send() and .attach()");
+    }
+
+    let o = options || {};
+    if (typeof options === 'string') {
+      o = { filename: options };
+    }
+
+    if (typeof file === 'string') {
+      if (!o.filename) o.filename = file;
+      debug('creating `fs.ReadStream` instance for file: %s', file);
+      file = fs.createReadStream(file);
+    } else if (!o.filename && file.path) {
+      o.filename = file.path;
+    }
+
+    this._getFormData().appendWithJson(field, file, o, textVal);
+  }
+  return this;
+};
+
 Request.prototype.attach = function (field, file, options) {
   if (file) {
     if (this._data) {
@@ -260,7 +284,7 @@ Request.prototype.attach = function (field, file, options) {
       o.filename = file.path;
     }
 
-    this._getFormData().append(field, file, o);
+    this._getFormData().appendWithJson(field, file, o, textVal);
   }
 
   return this;
