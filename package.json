@@ -76,12 +76,6 @@
     "node": ">= 7.0.0"
   },
   "homepage": "https://github.com/visionmedia/superagent",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "jsdelivr": "dist/superagent.min.js",
   "keywords": [
     "agent",
