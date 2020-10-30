@@ -284,7 +284,7 @@ Request.prototype.attach = function (field, file, options) {
       o.filename = file.path;
     }
 
-    this._getFormData().appendWithJson(field, file, o, textVal);
+    this._getFormData().append(field, file, o);
   }
 
   return this;
